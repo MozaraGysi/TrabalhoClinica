@@ -37,7 +37,7 @@ public class Consulta implements Serializable{
     @Column(name = "data", nullable = false)
     private Calendar data;
     @NotNull(message = "A hora deve ser informada")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "hora", nullable = false)
     private Calendar hora;
     @NotNull(message = "A preconsulta deve ser informada")
@@ -62,6 +62,26 @@ public class Consulta implements Serializable{
     private List<Exame> exame = new ArrayList<>();
     @OneToMany(mappedBy = "consulta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Receituario> receituario = new ArrayList<>();
+    
+    public void adicionarExame(Exame obj){
+        obj.setConsulta(this);// seto a venda do objeto venda itens
+        this.exame.add(obj); // adiciono o item na venda
+    }
+    
+    public void removerExame(int index){
+        Exame obj = this.exame.get(index);
+        this.exame.remove(index);
+    }
+    
+    public void adicionarReceita(Receituario obj){
+        obj.setConsulta(this);// seto a venda do objeto venda itens
+        this.receituario.add(obj); // adiciono o item na venda
+    }
+    
+    public void removerReceita(int index){
+        Receituario obj = this.receituario.get(index);
+        this.exame.remove(index);
+    }
     
     public Integer getId() {
         return id;
